@@ -1,0 +1,153 @@
+Objectif proposé (aligné aux 3 ODD) :
+"Prédire les facteurs de réussite et d'insertion professionnelle des étudiants, selon leur profil et leur parcours académique"
+🔍 Type : Classification supervisée
+📊 Données nécessaires (tu les as déjà !) :
+fact_addmission: Score final, date de résultat
+
+candidat: Sexe, nature bac, lieu, etc.
+
+fact_employability: Emploi ou non
+
+companies, fact_jobOffers: caractéristiques de l’emploi obtenu
+
+🧩 Pourquoi c’est aligné avec les ODD :
+
+ODD	Justification
+ODD 4	Améliore la compréhension des facteurs de réussite → contribue à une éducation plus inclusive et personnalisée
+ODD 8	Optimise l’insertion pro → aide à atteindre le plein emploi, l’égalité d’accès, la pertinence des parcours
+ODD 9	Utilise des modèles IA pour moderniser le suivi des parcours étudiants → innovation éducative & analytique
+🗣️ Ce que tu peux dire à ton professeur :
+"J’ai choisi cet objectif car il permet d’identifier les variables qui favorisent la réussite académique et l’insertion professionnelle. Cela contribue à l’ODD 4 en améliorant la qualité de l’éducation, à l’ODD 8 en favorisant l’accès à un emploi décent, et à l’ODD 9 en intégrant des outils d’analyse innovants dans le pilotage éducatif."
+
+
+Objectif de Machine Learning
+🧠 Titre :
+Prédiction du secteur d'activité dans lequel un diplômé a le plus de chances d’être recruté
+
+✅ Pourquoi cet objectif ?
+🎓 Alignement avec les ODD :
+
+ODD	Raison
+ODD 4 – Éducation de qualité	Permet d’analyser l’impact du parcours académique sur les débouchés réels
+ODD 8 – Travail décent	Anticipe l'insertion professionnelle selon les secteurs économiques
+ODD 9 – Industrie, innovation	Utilise l’IA pour prédire les préférences de recrutement et guider la stratégie de formation
+🔍 Définition du problème :
+Nous cherchons à prédire dans quel secteur (industrie) un étudiant sera recruté, en nous basant sur :
+
+son profil scolaire (type de bac, moyenne)
+
+son profil personnel (sexe, adresse)
+
+et son score final à la formation
+
+📊 Étapes de traitement des données
+1. 📁 Sources utilisées :
+Dim_Candidats
+
+Fact_Admission
+
+Fact_Employability
+
+Dim_Companies
+
+2. 🔄 Fusion :
+Nous avons relié les tables pour associer chaque étudiant à l’entreprise où il a été recruté, puis récupéré le secteur de cette entreprise (Industry) comme cible à prédire.
+
+3. 📉 Filtrage :
+Nous avons sélectionné les 5 secteurs les plus fréquents pour :
+
+éviter les biais dus aux classes rares
+
+garantir une distribution équilibrée
+
+4. 🧪 Préparation :
+Encodage des variables catégorielles (bac, sexe, adresse)
+
+Standardisation des données numériques
+
+Ajout de bruit aléatoire pour éviter l’overfitting
+
+SMOTE pour équilibrer le nombre d'exemples entre classes
+
+🤖 Modèle utilisé
+✅ Algorithme :
+Random Forest Classifier
+📌 Pourquoi ?
+
+Robuste aux données mixtes (catégorielles + numériques)
+
+Très performant pour la classification multiclasse
+
+Facilement interprétable
+
+🔍 Optimisation :
+Utilisation de GridSearchCV avec validation croisée (cv=3) pour trouver les meilleurs hyperparamètres :
+
+python
+Copier
+Modifier
+param_grid = {
+  'n_estimators': [100],
+  'max_depth': [5, 10],
+  'min_samples_split': [2, 4],
+  'class_weight': ['balanced']
+}
+📈 Évaluation du modèle
+🎯 Métriques utilisées :
+
+Nom	Rôle
+Accuracy	% de prédictions correctes globales
+Precision / Recall / F1-score	Pour chaque classe (secteur), pour juger de la qualité
+Matrice de confusion	Pour visualiser les erreurs de classification par secteur
+✅ Résultat obtenu (exemple simulé) :
+Accuracy : ~70 %
+
+F1-score élevé sur plusieurs classes
+
+Une meilleure répartition des prédictions (plus seulement sur une seule classe)
+
+🧠 Comment interpréter ce résultat ?
+Le modèle est capable de prédire de manière équilibrée les 5 secteurs principaux
+
+Il peut être utilisé pour :
+
+Orienter les étudiants selon leur profil vers un secteur où ils ont le plus de chances d’être recrutés
+
+Aider l’université à adapter son accompagnement carrière et ses partenariats entreprise
+
+Améliorer les tableaux de bord Power BI pour la cellule insertion professionnelle
+
+Souhaites-tu que je t’aide à formuler tout ça sous forme de :
+
+📝 Rapport PDF ?
+
+📊 Présentation PowerPoint ?
+
+💬 Script oral de soutenance ?
+
+Dis-moi ce que tu préfères !
+
+
+
+
+
+
+Vous avez dit :
+C'est un algo supervisé ou non supervisé 
+
+
+✅ C’est un algorithme supervisé 🧠✅
+🎓 Pourquoi ?
+Parce que :
+
+Tu as une variable cible (industry) connue à l’avance pour chaque étudiant
+
+Tu veux prédire cette cible à partir d’autres variables (score, sexe, bac, etc.)
+
+👉 Tu donnes au modèle des paires d’exemples (features + étiquette) pour qu’il apprenne à généraliser.
+
+🔁 Résumé :
+
+Type	Oui/Non	Justification
+Supervisé	✅ Oui	On connaît la classe à prédire (industry)
+Non supervisé	❌ Non	Pas de clustering, pas de réduction de dimension, pas d’étiquettes inconnues

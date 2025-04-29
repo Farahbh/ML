@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Résultat</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Fond clair */
+            font-family: 'Roboto', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #ffffff;
+            padding: 50px 40px;
+            border: 2px solid #e63946; /* Bordure rouge */
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            width: 400px;
+            text-align: center;
+            color: #2c2c2c;
+        }
+        h1 {
+            color: #e63946;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+        p {
+            font-size: 18px;
+            margin: 12px 0;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #e63946;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Résultat de l'Analyse</h1>
+        <p><strong>Texte :</strong> {{ text }}</p>
+        <p><strong>Émotion détectée :</strong> {{ emotion }}</p>
+        <p><strong>Taux de confiance :</strong> {{ confidence }}%</p>
+        <a href="/">🔙 Nouvelle Analyse</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prédiction Emploi Étudiant</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background-color: #f9f9f9; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        select, input[type="number"], input[type="submit"], input[type="range"] {
+            width: 300px; padding: 8px; margin-top: 5px; margin-bottom: 15px;
+        }
+        .result { font-size: 18px; margin-top: 20px; font-weight: bold; }
+        .proba { color: gray; font-size: 14px; }
+        .message-positif { color: green; }
+        .message-moyen { color: orange; }
+        .message-negatif { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Prédiction de l'Emploi Étudiant</h1>
+
+    <form method="POST">
+        <label>Index de performance :</label>
+        <input type="number" step="0.01" name="performance_index" required value="{{ request.form.performance_index }}">
+
+        <label>Nature du Bac :</label>
+        <select name="nature_bac" required>
+            {% for bac in ['ECOG','INFO','LETT','MATH','SCEXP','SPORT','TECH'] %}
+                <option value="{{ bac }}" {% if request.form.nature_bac == bac %}selected{% endif %}>{{ bac }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Sexe :</label>
+        <select name="sexe" required>
+            {% for sexe in ['F', 'M'] %}
+                <option value="{{ sexe }}" {% if request.form.sexe == sexe %}selected{% endif %}>{{ sexe }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Adresse :</label>
+        <select name="adresse" required>
+            {% for adresse in ['0042_Ramsey_Way','0053_Lien_Way','0057_Oakridge_Way','007_Summit_Way','00925_Eagan_Hill','009_Havey_Park','00_Commercial_Crossing','00_Luster_Court','00_Maywood_Pass','0112_Butterfield_Drive'] %}
+                <option value="{{ adresse }}" {% if request.form.adresse == adresse %}selected{% endif %}>{{ adresse }}</option>
+            {% endfor %}
+        </select>
+
+        <label>A postulé :</label>
+        <select name="a_postule" required>
+            <option value="0" {% if request.form.a_postule == '0' %}selected{% endif %}>Non</option>
+            <option value="1" {% if request.form.a_postule == '1' %}selected{% endif %}>Oui</option>
+        </select>
+
+        <label>Seuil de décision (%) :</label>
+        <input type="range" min="0" max="100" value="{{ request.form.seuil_slider or 50 }}" id="seuilSlider" name="seuil_slider" oninput="seuilOutput.value = seuilSlider.value">
+        <output id="seuilOutput">{{ request.form.seuil_slider or 50 }}</output> %
+
+        <br><br>
+        <input type="submit" value="Prédire">
+    </form>
+
+    {% if prediction %}
+        <div class="result 
+            {% if '✅' in prediction %}message-positif
+            {% elif '❌' in prediction %}message-negatif
+            {% else %}message-moyen{% endif %}">
+            Résultat : {{ prediction }}<br>
+            {% if probability is not none %}
+                <span class="proba">Probabilité d'emploi : {{ probability }}%</span><br><br>
+
+                {% if probability >= 75 %}
+                    🌟 Bravo ! Très forte probabilité d’employabilité !
+                {% elif probability >= 50 %}
+                    💡 Moyenne probabilité : améliore encore ton profil !
+                {% else %}
+                    ⚠️ Probabilité faible. Il est recommandé d’optimiser ton CV ou ton expérience.
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>

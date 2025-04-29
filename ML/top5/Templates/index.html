@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Recommandation IA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #1a1a1a;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px 40px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .dashboard-title {
+      text-align: center;
+      font-size: 22px;
+      color: #cc0000;
+      margin-bottom: 25px;
+    }
+
+    form {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    label, select {
+      font-size: 14px;
+      margin-left: 10px;
+      color: #333;
+    }
+
+    select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #999;
+      background-color: #eaeaea;
+      font-family: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead {
+      background-color: #cc0000;
+      color: white;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #ddd;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    tbody tr:hover {
+      background-color: #fce8e8;
+      transform: scale(1.002);
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 50px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .score-low    { background-color: #990000; } /* rouge foncé */
+    .score-medium { background-color: #999999; } /* gris */
+    .score-high   { background-color: #1a1a1a; } /* noir */
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        background: #fafafa;
+        border-radius: 8px;
+        padding: 10px;
+      }
+
+      td {
+        padding: 10px;
+        text-align: right;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      thead {
+        display: none;
+      }
+
+      form {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🔍 Recommandation IA 
+  </header>
+
+  <div class="container">
+    <div class="dashboard-title">Candidat VS Offer</div>
+
+    <form method="get" action="/">
+      <label for="limit">Nombre de candidats à afficher :</label>
+      <select name="limit" id="limit" onchange="this.form.submit()">
+        <option value="5" {% if current_limit == 5 %}selected{% endif %}>5</option>
+        <option value="10" {% if current_limit == 10 %}selected{% endif %}>10</option>
+        <option value="20" {% if current_limit == 20 %}selected{% endif %}>20</option>
+        <option value="-1" {% if current_limit == -1 %}selected{% endif %}>Tous</option>
+      </select>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Candidat</th>
+          <th>Compétences</th>
+          <th>Poste recommandé</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in tables %}
+        <tr>
+          <td data-label="Candidat">{{ row['Candidat'] }}</td>
+          <td data-label="Compétences">{{ row['Skills'] }}</td>
+          <td data-label="Poste">{{ row['Reco_JobTitle'] }}</td>
+          <td data-label="Score">
+            {% set s = row['SimilarityScore'] %}
+            <span class="score-badge {% if s < 0.15 %}score-low{% elif s < 0.4 %}score-medium{% else %}score-high{% endif %}">
+              {{ s }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

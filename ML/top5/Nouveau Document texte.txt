@@ -1,0 +1,87 @@
+🧠 Objectif du script
+Recommander à chaque candidat une seule offre d’emploi qui correspond le mieux à ses compétences (Skills) à l’aide d’un système de recommandation basé contenu (content-based filtering), avec TF-IDF + similarité cosinus.
+
+🧱 Structure du script
+1. Connexion à la base SQL Server
+python
+Copier
+Modifier
+connexion = pypyodbc.connect(...)
+Connexion à la base DW_ADMISSION
+
+Requêtes SQL exécutées avec pandas.read_sql() pour récupérer :
+
+Les candidats avec FullName et Skills
+
+Les offres avec Title et Description
+
+2. Prétraitement des données
+python
+Copier
+Modifier
+jobs.columns = [col.lower() for col in jobs.columns]
+candidats.columns = [col.lower() for col in candidats.columns]
+Toutes les colonnes sont converties en minuscules pour éviter les erreurs de nom de colonne.
+
+Fusion des colonnes title + description dans une nouvelle colonne job_text :
+
+python
+Copier
+Modifier
+jobs['job_text'] = jobs['title'].fillna('') + ' ' + jobs['description'].fillna('')
+3. Création d’un vecteur TF-IDF
+python
+Copier
+Modifier
+vectorizer = TfidfVectorizer(stop_words=french_stopwords)
+job_vectors = vectorizer.fit_transform(jobs['job_text'])
+TF-IDF transforme le texte des offres en vecteurs numériques
+
+Les mots fréquents en français sont ignorés (ex: "le", "et", "à", etc.)
+
+4. Calcul de similarité (pour chaque candidat)
+python
+Copier
+Modifier
+for _, candidat in candidats.iterrows():
+    skill_vector = vectorizer.transform([candidat['skills']])
+    similarities = cosine_similarity(skill_vector, job_vectors).flatten()
+    best_idx = similarities.argmax()
+Les compétences du candidat (skills) sont vectorisées
+
+On calcule la similarité cosinus entre son profil et chaque offre
+
+On sélectionne l’offre avec la plus grande similarité (argmax())
+
+5. Construction du tableau final
+python
+Copier
+Modifier
+results.append({
+    'Candidat': candidat['fullname'],
+    'Skills': candidat['skills'],
+    'Reco_JobID': jobs.iloc[best_idx]['pk_jobs'],
+    'Reco_JobTitle': jobs.iloc[best_idx]['title'],
+    'SimilarityScore': ...
+})
+Chaque ligne représente la meilleure correspondance entre un candidat et une offre
+
+6. Export vers CSV
+python
+Copier
+Modifier
+df_recommendations.to_csv("meilleure_recommandation_par_candidat.csv")
+Le fichier meilleure_recommandation_par_candidat.csv contient le top 1 offre par candidat
+
+Il peut être ouvert dans Excel, Power BI, ou visualisé sur ton site Flask
+
+Pourquoi dans cet algorithme de recommandation TF-IDF on n’a pas besoin de model.pkl ou scaler.pkl ?
+Parce que ce n’est pas un algorithme "entraîné" comme une Random Forest, un XGBoost, un réseau de neurones, etc.
+
+C’est un algorithme basé sur :
+
+🧠 TF-IDF vectorisation : transforme du texte en vecteurs
+
+📏 cosine_similarity : compare la similarité entre deux textes vectorisés
+
+Et tout cela est calculé à la volée à chaque appel, sans entraînement préalable ✅
