@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Update Task</h2>
+<div mat-dialog-content>
+  <div class="form-group">
+    <label for="taskDescription">Task Description</label>
+    <input type="text" class="form-control" id="taskDescription" [(ngModel)]="data.taskDescription" name="taskDescription" required>
+  </div>
+  <div class="form-group">
+    <label for="progress">Progress</label>
+    <input type="text" class="form-control" id="progress" [(ngModel)]="data.progress" name="progress" required>
+  </div>
+  <div class="form-group">
+    <label for="duration">Duration</label>
+    <input type="text" class="form-control" id="duration" [(ngModel)]="data.duration" name="duration" required>
+  </div>
+  <div class="form-group">
+    <label for="supervisorId">Supervisor ID</label>
+    <input type="number" class="form-control" id="supervisorId" [(ngModel)]="data.supervisor.id" name="supervisorId" required>
+  </div>
+  <div class="form-group">
+    <label for="studentId">Student ID</label>
+    <input type="number" class="form-control" id="studentId" [(ngModel)]="data.student.id" name="studentId" required>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button color="primary" (click)="updateTask(data)">Update</button>
+</div>

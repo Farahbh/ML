@@ -1,0 +1,60 @@
+body {
+  background-image: url('../../../../../assets/images/team/Esprit.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.alumni-card .card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.alumni-card .card-body {
+  padding: 20px;
+}
+
+.alumni-card .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.job-card .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.job-card .card-body {
+  padding: 15px;
+}
+
+.job-card .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.text-muted {
+  font-style: italic;
+}
+
+.pagination-controls {
+  font-size: 1rem;
+}
+
+.pagination-controls .btn {
+  min-width: 100px;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}

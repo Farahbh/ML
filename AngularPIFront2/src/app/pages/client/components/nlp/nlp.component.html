@@ -1,0 +1,44 @@
+<body>
+<div class="nlp-emotion-container">
+  <h2>Analyse des Émotions par Formation</h2>
+
+  <!-- File Upload Form -->
+  <form (ngSubmit)="onSubmit()" class="upload-form">
+    <div class="form-group">
+      <label for="csv_file">Télécharger un fichier CSV</label>
+      <input
+        id="csv_file"
+        type="file"
+        class="form-control"
+        accept=".csv"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">
+        Analyser
+      </button>
+    </div>
+  </form>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger mt-3" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Results -->
+  <div class="results-container mt-4" *ngIf="results">
+    <h3>Résultats de l'Analyse des Émotions</h3>
+    <div class="emotion-list-wrapper">
+      <ul class="emotion-list">
+        <li *ngFor="let formation of results | keyvalue" class="emotion-item">
+          <span class="formation-name">{{ formation.key }}</span>
+          <span class="emotion-badge" [ngClass]="getEmotionClass(formation.value)">
+            {{ formation.value }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>

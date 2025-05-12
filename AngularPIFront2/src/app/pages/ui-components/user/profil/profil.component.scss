@@ -1,0 +1,88 @@
+// Variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+
+// Styles
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar {
+  margin-bottom: 20px;
+
+  .avatar-label {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid $primary-color;
+    }
+
+    .change-avatar-btn {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: $primary-color;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+}
+
+
+.user-name {
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+  color: $primary-color;
+}
+
+.user-email {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: $secondary-color;
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    font-weight: bold;
+    color: $primary-color;
+  }
+
+  input[type="text"] {
+    border: 1px solid $secondary-color;
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,63 @@
+<div class="chatbot-container">
+  <!-- Chat Header -->
+  
+  <!-- Messages Area -->
+  <div class="messages" #messagesContainer>
+    <!-- Empty state - show when no messages -->
+    <div class="empty-state" *ngIf="messages.length === 0">
+     <img src="../../../../../assets/images/team/t.jpeg" alt="Bot" class="bot-image" />
+      <h3>Start a conversation</h3>
+      <p>Send a message to begin chatting with the assistant</p>
+    </div>
+
+    <!-- Actual messages -->
+    <div *ngFor="let message of messages"
+         class="message message-enter"
+         [ngClass]="{'user-message-container': message.sender === 'User'}">
+     
+      <!-- Bot message with avatar -->
+      <ng-container *ngIf="message.sender === 'Bot'">
+        <img src="../../../../../assets/images/team/t.jpeg" alt="Bot" class="bot-image" />
+        <div class="message-bubble bot-message">
+          <div class="message-content">{{ message.content }}</div>
+          <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+        </div>
+      </ng-container>
+     
+      <!-- User message -->
+      <ng-container *ngIf="message.sender === 'User'">
+        <div class="message-bubble user-message">
+          <div class="message-content">{{ message.content }}</div>
+          <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="message" *ngIf="isTyping">
+<img src="../../../../../assets/images/team/t.jpeg" alt="Bot" class="bot-image" />
+      <div class="typing-indicator">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-container">
+    <div class="input-group">
+      <input
+        [(ngModel)]="newMessage"
+        placeholder="Type your message here..."
+        (keyup.enter)="sendMessage()"
+        [disabled]="isTyping" />
+      <button class="send-button" (click)="sendMessage()" [disabled]="isTyping || !newMessage.trim()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M22 2L11 13"></path>
+          <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

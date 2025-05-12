@@ -1,0 +1,38 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">User Management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.address }}</td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+              <button class="btn btn-primary" (click)="openUpdateDialog(user.id)">Update</button>
+              <button class="btn btn-warning" (click)="openUpdateDialog(user.id)">Block</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="openAddDialog()">Add User</button>
+  </mat-card-content>
+</mat-card>

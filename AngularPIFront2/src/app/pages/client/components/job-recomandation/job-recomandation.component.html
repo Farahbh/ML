@@ -1,0 +1,56 @@
+<body>
+<div class="container mt-4">
+  <h2 class="mb-4">Recommandations d'Offres pour les Alumni sans Emploi</h2>
+
+  <!-- Error Message -->
+  <div class="mt-2 text-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Alumni List -->
+  <ng-container *ngIf="alumni.length > 0">
+    <div class="alumni-card mb-4" *ngFor="let alum of paginatedAlumni">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ alum.FullName || 'Nom inconnu' }}</h5>
+          <p class="card-text"><strong>Email :</strong> {{ alum.Email || 'Non fourni' }}</p>
+          <p class="card-text"><strong>Position souhaitée :</strong> {{ alum.Position || 'Non spécifiée' }}</p>
+          <p class="card-text"><strong>Industrie :</strong> {{ alum.Industry || 'Non spécifiée' }}</p>
+          <p class="card-text"><strong>Localisation :</strong> {{ alum.Location || 'Non spécifiée' }}</p>
+          <p class="card-text"><strong>Compétences :</strong> {{ alum.Skills || 'Aucune compétence listée' }}</p>
+          <p class="card-text"><strong>LinkedIn :</strong> 
+            <a *ngIf="alum.LinkedIn_Link" [href]="alum.LinkedIn_Link" target="_blank">{{ alum.LinkedIn_Link }}</a>
+            <span *ngIf="!alum.LinkedIn_Link">Non fourni</span>
+          </p>
+
+          <!-- Recommended Jobs -->
+          <h6 class="mt-3">Offres Recommandées :</h6>
+          <ng-container *ngIf="alum.RecommendedJobs.length > 0">
+            <div class="card mb-2 job-card" *ngFor="let job of alum.RecommendedJobs">
+              <div class="card-body">
+                <h6 class="card-title">{{ job.Title || 'Titre inconnu' }}</h6>
+                <p class="card-text"><strong>Entreprise :</strong> {{ job.Company || 'Non spécifiée' }}</p>
+                <p class="card-text"><strong>Localisation :</strong> {{ job.Location || 'Non spécifiée' }}</p>
+                <p class="card-text"><strong>Description :</strong> {{ job.Description || 'Aucune description' }}</p>
+                <p class="card-text"><strong>Type de contrat :</strong> {{ job.Contract_Type || 'Non spécifié' }}</p>
+              </div>
+            </div>
+          </ng-container>
+          <p *ngIf="alum.RecommendedJobs.length === 0" class="text-muted">Aucune offre recommandée pour cet alumni.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls d-flex justify-content-center mt-4">
+      <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">
+        Précédent
+      </button>
+      <span class="align-self-center">Page {{ currentPage }} de {{ totalPages }}</span>
+      <button class="btn btn-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Suivant
+      </button>
+    </div>
+  </ng-container>
+</div>
+</body>

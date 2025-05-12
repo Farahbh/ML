@@ -1,0 +1,35 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Task Management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Task Number</th>
+            <th>Description</th>
+            <th>Progress</th>
+            <th>Duration</th>
+            <th>Supervisor</th>
+            <th>Student</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks">
+            <td>{{ task.id }}</td>
+            <td>{{ task.taskDescription }}</td>
+            <td>{{ task.progress }}</td>
+            <td>{{ task.duration }}</td>
+            <td>{{ task.supervisor.name }}</td>
+            <td>{{ task.student.name }}</td>
+            <td><button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button></td>
+            <td><button class="btn btn-primary" (click)="openUpdateDialog(task.id)">update Task</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary" (click)="openAddDialog()">Add Task</button>
+  </mat-card-content>
+</mat-card>

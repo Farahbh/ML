@@ -1,0 +1,83 @@
+<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
+  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="text-center">
+            <a [routerLink]="['/dashboard']">
+              <img
+                src="./assets/images/logos/aa.png"
+                class="align-middle m-2 img-fluid"
+                alt="logo"
+                style="width: 50%;"
+              />
+            </a>
+          </div>
+
+          <div class="or-border m-t-30">Sign up with email</div>
+
+          <form [formGroup]="registerForm" (ngSubmit)="register()" class="m-t-30">
+            <mat-label class="mat-subtitle-2">First Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="firstName" />
+              <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">
+                First Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2">Last Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="lastName" />
+              <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">
+                Last Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2">Email</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="email" type="email" />
+              <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+                Invalid email format
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2">Password</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="password" type="password" />
+              <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                Minimum 6 characters
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2">Role</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select formControlName="role">
+                <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="registerForm.get('role')?.hasError('required')">
+                Role is required
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" class="w-100 m-t-16" type="submit" [disabled]="registerForm.invalid">
+              Sign Up
+            </button>
+          </form>
+
+          <span class="d-block f-w-500 text-center m-t-24">
+            Already have an Account?
+            <a [routerLink]="['/authentication/login']" class="text-decoration-none text-primary f-w-500 f-s-14">
+              Sign In
+            </a>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td colspan="7">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="taskId">Task Number</label>
+                  <input type="number" class="form-control" id="taskId" [(ngModel)]="taskId" name="taskId" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="taskDescription">Task Description</label>
+                  <input type="text" class="form-control" id="taskDescription" [(ngModel)]="taskDescription" name="taskDescription" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="progress">Progress</label>
+                  <input type="text" class="form-control" id="progress" [(ngModel)]="progress" name="progress" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="duration">Duration</label>
+                  <input type="text" class="form-control" id="duration" [(ngModel)]="duration" name="duration" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="supervisorId">Supervisor</label>
+                  <input type="number" class="form-control" id="supervisorId" [(ngModel)]="supervisorId" name="supervisorId" value="2">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="studentId">Student</label>
+                  <input type="number" class="form-control" id="studentId" [(ngModel)]="studentId" name="studentId" value="3">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-block" (click)="addTask()">Add Task</button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

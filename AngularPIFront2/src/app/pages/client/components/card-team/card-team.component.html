@@ -1,0 +1,6 @@
+<div class="card-container">
+    <div class="rectangle" *ngFor="let rect of rectangles" (mouseover)="onHover(rect)" (mouseout)="onHoverOut(rect)" [ngStyle]="rect.style">
+      <img [src]="rect.image" class="rectangle-image" alt="{{ rect.text }}" />
+      <span class="rectangle-text">{{ rect.text }}</span>
+    </div>
+  </div>

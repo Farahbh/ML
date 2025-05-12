@@ -1,0 +1,100 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Gestion des Comptes Utilisateurs</h2>
+
+  <!-- Search Input -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Rechercher par nom ou prénom..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="searchTerm = $event"
+    />
+  </div>
+
+  <!-- User Form -->
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()" class="mb-4">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="last_name"
+          placeholder="Nom"
+          [class.is-invalid]="userForm.get('last_name')?.touched && userForm.get('last_name')?.invalid"
+        />
+      </div>
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="first_name"
+          placeholder="Prénom"
+          [class.is-invalid]="userForm.get('first_name')?.touched && userForm.get('first_name')?.invalid"
+        />
+      </div>
+      <div class="col-md-6">
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Email"
+          [class.is-invalid]="userForm.get('email')?.touched && userForm.get('email')?.invalid"
+        />
+      </div>
+      <div class="col-md-6">
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          placeholder="Mot de passe"
+          [class.is-invalid]="userForm.get('password')?.touched && userForm.get('password')?.invalid"
+        />
+      </div>
+      <div class="col-md-6">
+        <select class="form-control" formControlName="role">
+          <option value="">Sélectionner un rôle</option>
+          <option value="administrative_responsible">Responsable administratif</option>
+          <option value="employability_responsible">Responsable employabilité</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="userForm.invalid">
+          {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Table des utilisateurs -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" (click)="editUser(user)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Bouton de déconnexion -->
+  <div class="mt-3">
+    <button class="btn btn-secondary" (click)="logout()">Déconnexion</button>
+  </div>
+</div>
