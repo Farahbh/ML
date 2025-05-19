@@ -1,7 +1,7 @@
  Academic Pathway Analysis and Employability Prediction Platform
 
 ## Overview
-Change is an intelligent platform for analyzing academic pathways and predicting employability. It helps educational institutions support students in their professional trajectories through data-driven insights.
+Admissity is an intelligent platform for analyzing academic pathways and predicting employability. It helps educational institutions support students in their professional trajectories through data-driven insights.
 
 ## Objectives
 - Analyze admission, training, and employment data.
