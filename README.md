@@ -1,4 +1,4 @@
-# Change - Academic Pathway Analysis and Employability Prediction Platform
+ Academic Pathway Analysis and Employability Prediction Platform
 
 ## Overview
 Change is an intelligent platform for analyzing academic pathways and predicting employability. It helps educational institutions support students in their professional trajectories through data-driven insights.
@@ -21,7 +21,7 @@ Change is an intelligent platform for analyzing academic pathways and predicting
 
 ## Setup Instructions
 ### Prerequisites
-- Python 3.8+
+- Python 3.8
 - Node.js and Angular CLI
 - SQL Server
 - Power BI Desktop
